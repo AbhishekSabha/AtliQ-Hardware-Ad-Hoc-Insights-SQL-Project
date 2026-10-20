@@ -142,7 +142,8 @@ WITH pre_discount_custs_tbl AS(
 	ON c.customer_code = i.customer_code 
 	WHERE market = "India" AND i.fiscal_year = 2021
 )
-SELECT customer_code, customer, CONCAT(ROUND(pre_invoice_discount_pct*100,2), "%") AS pre_invoice_discount_pct
+SELECT customer_code, customer, CONCAT(ROUND(pre_invoice_discount_pct*100,2), "%")
+AS pre_invoice_discount_pct
 FROM pre_discount_custs_tbl
 WHERE pre_invoice_discount_pct > (SELECT AVG(pre_invoice_discount_pct) FROM pre_discount_custs_tbl)
 ORDER BY pre_invoice_discount_pct DESC 
@@ -159,7 +160,8 @@ Q7. **Monthly Gross Sales for AtliQ Exclusive**
 
 ```
 SELECT CONCAT(MONTHNAME(s.date), "-", YEAR(s.date)) AS month_name, s.fiscal_year, 
-CONCAT(ROUND(SUM(g.gross_price * s.sold_quantity)/100000,2), "M") AS gross_sales_amt_mln
+CONCAT(ROUND(SUM(g.gross_price * s.sold_quantity)/100000,2), "M")
+AS gross_sales_amt_mln
 FROM fact_sales_monthly s 
 JOIN dim_customer c
 ON s.customer_code = c.customer_code
@@ -209,7 +211,8 @@ WITH gross_sales AS(
 	GROUP BY c.channel
     ORDER BY gross_sales_amt DESC
 )
-SELECT channel, CONCAT(ROUND((gross_sales_amt/1000000),2), "M") AS gross_sales_amt_mln, 
+SELECT channel, CONCAT(ROUND((gross_sales_amt/1000000),2), "M")
+AS gross_sales_amt_mln, 
 (	CONCAT(ROUND((gross_sales_amt *100)/
 	(SELECT SUM(g.gross_price * s.sold_quantity)
 	FROM fact_sales_monthly s 
@@ -229,7 +232,8 @@ Q10. **Top Three Products by Quantity Sold in Each Division**
 
 ```
 WITH division_sales AS(
-	SELECT p.division, s.product_code, p.product, SUM(s.sold_quantity) AS total_sold_quantity
+	SELECT p.division, s.product_code, p.product, SUM(s.sold_quantity)
+	AS total_sold_quantity
 	FROM fact_sales_monthly s
 	JOIN dim_product p
 	ON s.product_code = p.product_code
@@ -238,7 +242,8 @@ WITH division_sales AS(
 ), 
 division_rank AS(
 	SELECT division, product_code, product, total_sold_quantity,
-	DENSE_RANK() OVER(PARTITION BY division ORDER BY total_sold_quantity DESC) AS rank_order
+	DENSE_RANK() OVER(PARTITION BY division ORDER BY total_sold_quantity DESC)
+	AS rank_order
 	FROM division_sales
     )
 SELECT 
