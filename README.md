@@ -182,7 +182,7 @@ Q8. **Quarter with the Highest Total Sold Quantity in 2020**
 ```
 SELECT 
 	CASE
-		WHEN MONTH(date) BETWEEN 9 AND 11 THEN "Q1"
+	WHEN MONTH(date) BETWEEN 9 AND 11 THEN "Q1"
         WHEN MONTH(date) IN( 12,1, 2) THEN "Q2"
         WHEN MONTH(date) BETWEEN 3 AND 5 THEN "Q3"
         WHEN MONTH(date) BETWEEN 6 AND 8 THEN "Q4"
