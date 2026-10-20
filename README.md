@@ -48,7 +48,8 @@ Q2. Unique Product Growth: 2020 vs. 2021
 
 ```
 SELECT sales_20.count_20 AS unique_products_2020 ,sales_21.count_21 AS unique_products_2021, 
-CONCAT(ROUND((sales_21.count_21 - sales_20.count_20)/ sales_20.count_20 * 100,2), "%") AS percentage_chg
+CONCAT(ROUND((sales_21.count_21 - sales_20.count_20)/ sales_20.count_20 * 100,2), "%")
+AS percentage_chg
 FROM 
 	(SELECT COUNT(DISTINCT(product_code)) AS count_20
     FROM fact_sales_monthly
